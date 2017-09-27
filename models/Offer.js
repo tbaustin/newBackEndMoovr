@@ -1,0 +1,82 @@
+const mongoose = require('mongoose');
+
+var OfferSchema = new mongoose.Schema({
+  offer: { type: String },
+  cert: { type: String, default: '' },
+  txid: { type: String },
+  expires_in: { type: Number },
+  expires_on: { type: Number },
+  expired: { type: Boolean },
+  height: { type: String },
+  time: { type: Date, default: Date.now() },
+  category: { type: String },
+  title: { type: String },
+  quantity: { type: String },
+  currency: { type: String },
+  sysprice: { type: Number },
+  price: { type: String },
+  ismine: { type: Boolean },
+  commission: { type: String },
+  offerlink: { type: String },
+  offerlink_guid: { type: String, default: '' },
+  offerlink_seller: { type: String, default: '' },
+  private: { type: String },
+  safesearch: { type: String, default: '' },
+  safetylevel: { type: Number, default: 0 },
+  paymentoptions: { type: Number },
+  paymentoptions_display: { type: String },
+  alias_peg: { type: String },
+  description: { type: String },
+  alias: { type: String },
+  address: { type: String },
+  alias_rating: { type: Number, default: 0 },
+  alias_rating_count: { type: Number, default: 0 },
+  alias_rating_display: { type: String },
+  geolocation: { type: String, default: '' },
+  offers_sold: { type: Number, default: 0 }
+});
+
+OfferSchema.methods.summary = function() {
+  const summary = {
+    _id: this._id,
+    offer: this.offer,
+    txid: this.txid,
+    expires_in: this.expires_in,
+    expires_on: this.expires_on,
+    expired: this.expired,
+    height: this.height,
+    category: this.category,
+    title: this.title,
+    quantity: this.quantity,
+    currency: this.currency,
+    sysprice: this.sysprice,
+    price: this.price,
+    ismine: this.ismine,
+    commission: this.commission,
+    offerlink: this.offerlink,
+    private: this.private,
+    paymentoptions: this.paymentoptions,
+    paymentoptions_display: this.paymentoptions_display,
+    alias_peg: this.alias_peg,
+    description: JSON.parse(this.description.description),
+    media: JSON.parse(this.description.media),
+    alias: this.alias,
+    address: this.address,
+    alias_rating_display: this.alias_rating_display,
+    offers_sold: this.offers_sold,
+    geolocation: JSON.parse(this.geolocation),
+    alias_rating_count: this.alias_rating_count,
+    alias_rating: this.alias_rating,
+    safetylevel: this.safetylevel,
+    safesearch: this.safesearch,
+    offerlink_seller: this.offerlink_seller,
+    offerlink_guid: this.offerlink_guid,
+    time: this.time,
+    cert: this.cert,
+    __v: this.__v
+  };
+
+  return summary;
+};
+
+module.exports = mongoose.model('OfferSchema', OfferSchema);
